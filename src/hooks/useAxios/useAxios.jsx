@@ -5,7 +5,7 @@ export const useAxios = () => {
   return async ({ url, method = "GET", body, headers }) => {
     return await axios({
       url: `${REACT_APP_MAIN_URL}${url}`,
-      method: method,
+      method,
       data: {
         ...body,
       },

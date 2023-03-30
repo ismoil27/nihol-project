@@ -1,9 +1,13 @@
 import React, { useRef, useState } from "react";
 import { Wrapper } from "./style";
-import { notification } from "antd";
-import axios from "axios";
+// import { notification } from "antd";
+import { useAxios } from "../../hooks/useAxios/useAxios";
+import errorNotifier from "../../Generic/NotificationAPI";
+import { LoadingOutlined } from "@ant-design/icons";
 
 const Login = () => {
+  const [loading, setLoading] = useState(false);
+  const axios = useAxios();
   const [warningAnim, setWarningAnim] = useState(false);
   const numberRef = useRef();
   const passwordRef = useRef();
@@ -15,30 +19,32 @@ const Login = () => {
     }, 1000);
   };
 
-  const onAuth = () => {
+  const onAuth = async () => {
     const password = passwordRef.current.input.value;
     const number = numberRef.current.input.value;
     if (!password || !number) {
       playAnim();
-      notification.error({
-        message: "Please fill all fields",
-      });
-    } else {
-      axios({
-        url: `${process.env.REACT_APP_MAIN_URL}/user/sign-in`,
-        method: "POST",
-        data: {
-          password,
-          phoneNumber: number,
-        },
-      }).then((res) => console.log(res));
+      errorNotifier({ errorStatus: "notFillingError" });
+      return;
     }
-
-    console.log(process.env.REACT_APP_MAIN_URL);
-    console.log({
-      password: passwordRef.current.input.value,
-      number: numberRef.current.input.value,
+    setLoading(true);
+    const response = await axios({
+      url: `/user/sign-in`,
+      method: "POST",
+      body: {
+        password: password,
+        phoneNumber: `+998${number}`,
+      },
     });
+
+    setLoading(false);
+
+    if (response?.response?.status >= 400)
+      return errorNotifier({ errorStatus: response?.response?.status });
+
+    const { token } = response.data.data;
+
+    localStorage.setItem("token", token);
   };
 
   return (
@@ -61,7 +67,7 @@ const Login = () => {
           placeholder="Password... "
         />
         <Wrapper.Button warningAnimation={warningAnim} onClick={onAuth}>
-          Login
+          {loading ? <LoadingOutlined /> : " Login "}
         </Wrapper.Button>
       </Wrapper.Container>
     </Wrapper>
