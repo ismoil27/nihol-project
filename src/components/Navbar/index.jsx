@@ -6,12 +6,26 @@ import { Wrapper } from "./style";
 const Navbar = () => {
   const { loginItems } = useDropDown();
 
+  const settingHandler = () => {
+    console.log("Clicked setting icon");
+  };
+  const switchLocaleHandler = () => {
+    console.log("Clicked Locale icon");
+  };
+  const logOutHandler = () => {
+    console.log("Clicked logout icon");
+  };
+
   return (
     <Wrapper>
       <Wrapper.Title>NIHOL</Wrapper.Title>
       <Dropdown
         menu={{
-          items: loginItems,
+          items: loginItems({
+            settingHandler,
+            switchLocaleHandler,
+            logOutHandler,
+          }),
         }}
         trigger={["click"]}
       >

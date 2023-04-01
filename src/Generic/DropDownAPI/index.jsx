@@ -10,10 +10,14 @@ const customIconStyle = {
 };
 
 export const useDropDown = () => {
-  const loginItems = [
+  const loginItems = ({
+    settingHandler,
+    switchLocaleHandler,
+    logOutHandler,
+  }) => [
     {
       label: (
-        <DropDownContentWrapper>
+        <DropDownContentWrapper onClick={settingHandler}>
           <SettingOutlined style={customIconStyle} />
           Settings
         </DropDownContentWrapper>
@@ -22,7 +26,7 @@ export const useDropDown = () => {
     },
     {
       label: (
-        <DropDownContentWrapper>
+        <DropDownContentWrapper onClick={switchLocaleHandler}>
           <TranslationOutlined style={customIconStyle} />
           Change language
         </DropDownContentWrapper>
@@ -31,7 +35,10 @@ export const useDropDown = () => {
     },
     {
       label: (
-        <DropDownContentWrapper style={{ color: "red" }}>
+        <DropDownContentWrapper
+          onClick={logOutHandler}
+          style={{ color: "red" }}
+        >
           <LogoutOutlined style={{ ...customIconStyle, color: "red" }} />
           Log out
         </DropDownContentWrapper>
