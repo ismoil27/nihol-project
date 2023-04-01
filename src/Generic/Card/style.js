@@ -27,7 +27,7 @@ export const Wrapper = styled.div`
 `;
 Wrapper.Title = styled.div`
   padding-top: 30px;
-  font-family: "Inter";
+  font-family: Inter;
   font-style: normal;
   font-weight: 500;
   font-size: 18px;

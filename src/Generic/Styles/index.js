@@ -10,7 +10,7 @@ export const Title = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: "Inter";
+  font-family: Inter;
   font-style: normal;
   font-weight: 500;
   font-size: 34px;
