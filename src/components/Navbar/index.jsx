@@ -2,6 +2,7 @@ import { Dropdown } from "antd";
 import React from "react";
 import { useDropDown } from "../../Generic/DropDownAPI";
 import { Wrapper } from "./style";
+import { Outlet } from "react-router-dom";
 
 const Navbar = () => {
   const { loginItems } = useDropDown();
@@ -17,21 +18,24 @@ const Navbar = () => {
   };
 
   return (
-    <Wrapper>
-      <Wrapper.Title>NIHOL</Wrapper.Title>
-      <Dropdown
-        menu={{
-          items: loginItems({
-            settingHandler,
-            switchLocaleHandler,
-            logOutHandler,
-          }),
-        }}
-        trigger={["click"]}
-      >
-        <Wrapper.Avatar>A</Wrapper.Avatar>
-      </Dropdown>
-    </Wrapper>
+    <>
+      <Wrapper>
+        <Wrapper.Title>NIHOL</Wrapper.Title>
+        <Dropdown
+          menu={{
+            items: loginItems({
+              settingHandler,
+              switchLocaleHandler,
+              logOutHandler,
+            }),
+          }}
+          trigger={["click"]}
+        >
+          <Wrapper.Avatar>A</Wrapper.Avatar>
+        </Dropdown>
+      </Wrapper>
+      <Outlet />
+    </>
   );
 };
 
